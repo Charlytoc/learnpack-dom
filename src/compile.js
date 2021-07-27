@@ -1,5 +1,5 @@
 const fs = require('fs')
-const path = require('path');s
+const path = require('path');
 const webpack = require('webpack');
 const { Utils, CompilationError } = require('learnpack/plugin')
 

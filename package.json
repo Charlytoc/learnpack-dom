@@ -21,7 +21,7 @@
     "rewire": "^5.0.0",
     "shelljs": "^0.8.4",
     "source-map-support": "^0.5.19",
-    "webpack": "^5.40.0"
+    "webpack": "^5.46.0"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",
