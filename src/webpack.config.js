@@ -1,5 +1,7 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+let nodeModulesPath = path.dirname(require.resolve('jest'))
+nodeModulesPath = nodeModulesPath.substr(0,nodeModulesPath.indexOf("node_modules")) + "node_modules"
 
 module.exports = (files) => ({
   mode: "development",
@@ -54,9 +56,5 @@ module.exports = (files) => ({
       modules: false
   },
   devtool: "source-map",
-  plugins: [
-    new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, './template.html')
-    })
-  ]
+  plugins: []
 });

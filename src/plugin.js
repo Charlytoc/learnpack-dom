@@ -1,7 +1,7 @@
-const { plugin } = require("./utils/index")
+const { plugin } = require("learnpack/plugin")
 
 module.exports = plugin({
-    language: "html",
+    language: "vanillajs",
     compile: require('./compile'),
-    test: require('./test'),
+    // test: require('./test'),
 }) 
