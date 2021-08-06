@@ -89,7 +89,7 @@ module.exports = {
 
         return null
       });
-      console.log("errors", errors)
+
     if(errors.filter(e => e != null).length > 0) throw CompilationError([].concat(errors.filter(e => e !== null)).map(e => e.message).join("\n"));
 
     
