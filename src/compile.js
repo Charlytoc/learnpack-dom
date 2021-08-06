@@ -34,16 +34,15 @@ module.exports = {
  */
   run: async function ({ exercise, socket, configuration }) {
 
-    let entryPath =  exercise.files.map(f => './'+f.path).find(f => f.includes(exercise.entry || 'index.html'));
-    if(!entryPath) throw new Error("No entry file, maybe you need to create an app.js file on the exercise folder?");
-
-    // here you should include your compulation code, the files to compile will be inside exercise.files
+    let entryPaths =  exercise.files.map(f => './'+f.path).filter(f => f.includes(exercise.entry) || f.includes('styles.css'));
+    if(entryPaths.length === 0) throw new Error("No entry files, maybe you need to create an index.js file on the exercise folder?");
+    console.log("entryPaths", entryPaths, exercise.files)
 
     /**
      * LOAD WEBPACK
      */
     const webpackConfigPath = path.resolve(__dirname,`./webpack.config.js`);
-    if (!fs.existsSync(webpackConfigPath)) throw CompilationError(`Uknown react.js config for webpack`)
+    if (!fs.existsSync(webpackConfigPath)) throw CompilationError(`Uknown config for webpack`)
 
     /**
     * COMPILATION WITH WEBPACK
@@ -62,7 +61,7 @@ module.exports = {
 
     // webpackConfig.entry = entryPath
     webpackConfig.entry = [
-      clean(entryPath)
+      ...entryPaths
     ];
 
     const compiler = webpack(webpackConfig);

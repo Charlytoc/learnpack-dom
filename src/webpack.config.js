@@ -1,4 +1,5 @@
-const path = require('path');
+const path = require('path')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 let nodeModulesPath = path.dirname(require.resolve('jest'))
 nodeModulesPath = nodeModulesPath.substr(0,nodeModulesPath.indexOf("node_modules")) + "node_modules"
@@ -29,9 +30,11 @@ module.exports = (files) => ({
         },
         {
           test: /\.(css)$/, use: [
-          {
-              loader: "css-loader" // translates CSS into CommonJS
-          }]
+            MiniCssExtractPlugin.loader,
+            {
+                loader: "css-loader" // translates CSS into CommonJS
+            }
+          ]
         }, //css only files
         {
           test: /\.(png|svg|jpg|jpeg|gif)$/, use: {
@@ -56,5 +59,10 @@ module.exports = (files) => ({
       modules: false
   },
   devtool: "source-map",
-  plugins: []
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'styles.css',
+      chunkFilename: 'styles.css',
+    }),
+  ]
 });
