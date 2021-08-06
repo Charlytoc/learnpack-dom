@@ -36,7 +36,6 @@ module.exports = {
 
     let entryPaths =  exercise.files.map(f => './'+f.path).filter(f => f.includes(exercise.entry) || f.includes('styles.css'));
     if(entryPaths.length === 0) throw new Error("No entry files, maybe you need to create an index.js file on the exercise folder?");
-    console.log("entryPaths", entryPaths, exercise.files)
 
     /**
      * LOAD WEBPACK
