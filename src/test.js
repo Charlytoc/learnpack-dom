@@ -25,6 +25,10 @@ module.exports =  {
     let jestConfig = {
       verbose: true,
       testEnvironment: "jsdom",
+      testEnvironmentOptions: {
+        resources: 'usable',
+        runScripts: 'dangerously',
+      },
       moduleDirectories: [nodeModulesPath],
       prettierPath: nodeModulesPath+'/prettier',
       transform: {
