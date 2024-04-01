@@ -74,6 +74,13 @@ module.exports =  {
     let commands = await getCommands()
 
     if(!Array.isArray(commands)) commands = [commands]
+
+    const result = {
+      starting_at: Date.now(),
+      source_code: "",
+    }
+
+
     let stdout, stderr, code = [null, null, null]
     for(let cycle = 0; cycle < commands.length; cycle++){
       let resp = shell.exec(commands[cycle], { silent: true })
@@ -83,7 +90,17 @@ module.exports =  {
       if(code != 0) break
     }
 
-    if(code != 0) throw TestingError(getStdout(stdout || stderr).join())
-    else return stdout && stdout.length > 0 ? stdout : chalk.green("✔ All tests have passed")
+    result.ended_at = Date.now();
+    result.exitCode = code
+    result.stdout = stdout
+    result.stderr = stderr
+
+    if(code != 0) {
+      result.stderr = getStdout(stdout || stderr).join()
+    }
+    if (!result.stdout) {
+      result.stdout = chalk.green("All tests have passed!")
+    }
+    return result
   }
 }

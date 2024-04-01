@@ -64,15 +64,30 @@ module.exports = {
     ];
 
     const compiler = webpack(webpackConfig);
+
+    const result = {
+      starting_at: Date.now(),
+      source_code: "",
+      exitCode: 0
+    }
+
     const { err, stats } = await run(compiler);
 
-    if (err) throw CompilationError(err);
+    result.ended_at = Date.now()
+    if (err) {
+      result.stderr = err
+      result.exitCode = 1
+    }
 
     const output = stats.toString({
         chunks: false,  // Makes the build much quieter
         colors: true    // Shows colors in the console
     });
-    if(stats.hasErrors()) throw CompilationError(output);
+    result.stdout = Utils.cleanStdout(output)
+    if(stats.hasErrors()) {
+      result.stderr = output
+      result.exitCode = 1
+    }
 
 
     const errors = exercise.files.filter(f => !f.hidden && f.name.includes(".html"))
@@ -97,7 +112,7 @@ module.exports = {
     socket.openWindow(`${configuration.publicUrl}/preview`)
     
     // return string with the console output (stdout)
-    return Utils.cleanStdout("Successfully built your HTML")
+    return result
   },
 }
 
