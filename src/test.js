@@ -48,8 +48,8 @@ module.exports =  {
       const reportedPath = path.resolve(__dirname,'./utils/reporter.js')
       if (!fs.existsSync(reportedPath))  throw TestingError(`🚫 Custom Jest Reporter not found for at ${reportedPath}`)
 
-      jestConfig.reporters = [[ reportedPath, { reportPath: `${configuration.dirPath}/reports/${exercise.slug}.json` }]]
-      return `jest --config='${JSON.stringify({ ...jestConfig, testRegex: getEntry() }).replace(/"/g, '\\"')}' --colors`
+      jestConfig.reporters = [[ reportedPath, { reportPath: path.resolve(`${configuration.dirPath}/reports/${exercise.slug}.json`) }]]
+      return `jest --config='${JSON.stringify({ ...jestConfig, testRegex: getEntry() })}' --colors`
     }
 
     const getStdout = (rawStdout) => {
