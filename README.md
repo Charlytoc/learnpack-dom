@@ -15,8 +15,23 @@ Node compiler for DOM learnpack tutorials
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
+* [Usage](#usage)
+* [Commands](#commands)
+<!-- tocstop -->
 # Usage
 <!-- usage -->
+```sh-session
+$ npm install -g @learnpack/dom
+$ oclif-example COMMAND
+running command...
+$ oclif-example (-v|--version|version)
+@learnpack/dom/1.1.2 win32-x64 node-v20.10.0
+$ oclif-example --help [COMMAND]
+USAGE
+  $ oclif-example COMMAND
+...
+```
+<!-- usagestop -->
 ```sh-session
 $ npm install -g @learnpack/dom
 $ oclif-example COMMAND
@@ -43,6 +58,8 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+
+<!-- commandsstop -->
 
 <!-- commandsstop -->
 
