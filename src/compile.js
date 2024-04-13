@@ -34,13 +34,13 @@ module.exports = {
  */
   run: async function ({ exercise, socket, configuration }) {
 
-    let entryPaths =  exercise.files.map(f => './'+f.path).filter(f => f.includes(exercise.entry) || f.includes('styles.css'));
-    if(entryPaths.length === 0) throw new Error("No entry files, maybe you need to create an index.js file on the exercise folder?");
+    let entryPaths = exercise.files.map(f => './' + f.path).filter(f => f.includes(exercise.entry) || f.includes('styles.css'));
+    if (entryPaths.length === 0) throw new Error("No entry files, maybe you need to create an index.js file on the exercise folder?");
 
     /**
      * LOAD WEBPACK
      */
-    const webpackConfigPath = path.resolve(__dirname,`./webpack.config.js`);
+    const webpackConfigPath = path.resolve(__dirname, `./webpack.config.js`);
     if (!fs.existsSync(webpackConfigPath)) throw CompilationError(`Uknown config for webpack`)
 
     /**
@@ -80,11 +80,11 @@ module.exports = {
     }
 
     const output = stats.toString({
-        chunks: false,  // Makes the build much quieter
-        colors: true    // Shows colors in the console
+      chunks: false,  // Makes the build much quieter
+      colors: true    // Shows colors in the console
     });
     result.stdout = Utils.cleanStdout(output)
-    if(stats.hasErrors()) {
+    if (stats.hasErrors()) {
       result.stderr = output
       result.exitCode = 1
     }
@@ -92,25 +92,26 @@ module.exports = {
 
     const errors = exercise.files.filter(f => !f.hidden && f.name.includes(".html"))
       .map(file => {
-        try{
-          if(file.name.includes(".html")) prettify(file)
+        try {
+          if (file.name.includes(".html")) prettify(file)
         }
-        catch(error){
+        catch (error) {
           return error
         }
 
         const _path = webpackConfig.output.path + "/" + file.name;
-        if(!fs.existsSync(_path)) fs.copyFileSync(file.path, _path);
+
+
+        fs.copyFileSync(file.path, _path);
 
         return null
       });
 
-    if(errors.filter(e => e != null).length > 0) throw CompilationError([].concat(errors.filter(e => e !== null)).map(e => e.message).join("\n"));
+    if (errors.filter(e => e != null).length > 0) throw CompilationError([].concat(errors.filter(e => e !== null)).map(e => e.message).join("\n"));
 
-    
     // if you need to open the compiler website on a new window
     socket.openWindow(`${configuration.publicUrl}/preview`)
-    
+
     // return string with the console output (stdout)
     return result
   },
@@ -119,12 +120,12 @@ module.exports = {
 
 const prettify = (file) => {
   const prettyConfig = {
-      printWidth: 150,             // Specify the length of line that the printer will wrap on.
-      tabWidth: 4,                // Specify the number of spaces per indentation-level.
-      useTabs: true,              // Indent lines with tabs instead of spaces.
-      bracketSpacing: true,
-      semi: true,                 // Print semicolons at the ends of statements.
-      encoding: 'utf-8'           // Which encoding scheme to use on files
+    printWidth: 150,             // Specify the length of line that the printer will wrap on.
+    tabWidth: 4,                // Specify the number of spaces per indentation-level.
+    useTabs: true,              // Indent lines with tabs instead of spaces.
+    bracketSpacing: true,
+    semi: true,                 // Print semicolons at the ends of statements.
+    encoding: 'utf-8'           // Which encoding scheme to use on files
   };
 
   const content = fs.readFileSync(file.path, "utf8");
